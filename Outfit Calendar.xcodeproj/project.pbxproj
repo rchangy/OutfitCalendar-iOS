@@ -30,11 +30,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		AC0A76F72D59DC6E005A07ED /* Outfit Calendar */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Outfit Calendar";
-			sourceTree = "<group>";
-		};
 		AC0A77092D59DC70005A07ED /* Outfit CalendarTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Outfit CalendarTests";
@@ -43,6 +38,11 @@
 		AC0A77132D59DC70005A07ED /* Outfit CalendarUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Outfit CalendarUITests";
+			sourceTree = "<group>";
+		};
+		ACFCC7662D7E7F1E00C0A337 /* Outfit Calendar */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Outfit Calendar";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,7 +75,7 @@
 		AC0A76EC2D59DC6E005A07ED = {
 			isa = PBXGroup;
 			children = (
-				AC0A76F72D59DC6E005A07ED /* Outfit Calendar */,
+				ACFCC7662D7E7F1E00C0A337 /* Outfit Calendar */,
 				AC0A77092D59DC70005A07ED /* Outfit CalendarTests */,
 				AC0A77132D59DC70005A07ED /* Outfit CalendarUITests */,
 				AC0A76F62D59DC6E005A07ED /* Products */,
@@ -108,7 +108,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				AC0A76F72D59DC6E005A07ED /* Outfit Calendar */,
+				ACFCC7662D7E7F1E00C0A337 /* Outfit Calendar */,
 			);
 			name = "Outfit Calendar";
 			packageProductDependencies = (
@@ -406,11 +406,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "hanchih.Outfit-Calendar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -445,11 +445,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "hanchih.Outfit-Calendar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
