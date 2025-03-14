@@ -20,7 +20,7 @@ enum ClothesRouter: URLRequestConvertible {
         case .createClothes:
             return "/clothes/"
         case .updateClothes(let clothes), .removeClothes(let clothes):
-            return "/clothes/\(clothes.clothId ?? 0)"
+            return "/clothes/\(clothes.clothId)"
         }
     }
     

@@ -11,19 +11,19 @@ struct Clothes: Decodable, Identifiable {
     
     let id = UUID()
     
-    var clothId: Int64?
-    var userId: Int64?
-    var clothName: String?
-    var category: String?
-    var subcategory: String?
-    var color: String?
-    var usages: String?
-    var image: String?
-    var temperatureLevel: Int8?
-    var imageContent: String?
-    var temperatureMax: Int64?
-    var temperatureMin: Int64?
-    var season: String?
+    var clothId: Int64 = 0
+    var userId: Int64 = 0
+    var clothName: String = ""
+    var category: String = ""
+    var subcategory: String = ""
+    var color: String = ""
+    var usages: String = ""
+    var image: String = ""
+    var temperatureLevel: Int8 = 0
+    var imageContent: String = ""
+    var temperatureMax: Int64 = 0
+    var temperatureMin: Int64 = 0
+    var season: String = ""
     
     private enum CodingKeys: String, CodingKey {
         case clothId = "ClothId"
@@ -35,7 +35,7 @@ struct Clothes: Decodable, Identifiable {
         case usages = "Usages"
         case image = "Image"
         case temperatureLevel = "TemperatureLevel"
-        case imageContent = "ImageContent"
+        case imageContent = "image_content"
         case temperatureMax = "TemperatureMax"
         case temperatureMin = "TemperatureMin"
         case season = "Season"

@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var dataViewModel = DataViewModel(userId: 0)
     
+    @State var addItemPresented = false
+    
     var body: some View {
         NavigationStack{
             List {
@@ -19,6 +21,12 @@ struct ContentView: View {
                     } label: {
                         ClothesListItemView(clothes: clothes)
                     }
+                }
+            }.toolbar{
+                Button("Add Item"){
+                    addItemPresented.toggle()
+                }.sheet(isPresented: $addItemPresented){
+                    ClothesEditView()
                 }
             }
         }
