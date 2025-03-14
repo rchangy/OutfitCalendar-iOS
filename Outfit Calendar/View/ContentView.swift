@@ -11,12 +11,17 @@ struct ContentView: View {
     @ObservedObject var dataViewModel = DataViewModel(userId: 0)
     
     var body: some View {
-        List {
-            ForEach(dataViewModel.clothes) { clothes in
-                Text(clothes.clothName ?? "no data")
+        NavigationStack{
+            List {
+                ForEach(dataViewModel.clothes) { clothes in
+                    NavigationLink{
+                        ClothesView(clothes: clothes)
+                    } label: {
+                        ClothesListItemView(clothes: clothes)
+                    }
+                }
             }
         }
-        
     }
 }
 
