@@ -8,6 +8,7 @@
 import Foundation
 
 class ClothesRepository {
+    static let shared = ClothesRepository()
     
     let service: ClothesNetworkService
     

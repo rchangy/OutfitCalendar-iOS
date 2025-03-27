@@ -14,7 +14,7 @@ class DataViewModel: ObservableObject {
     var userId: UInt64 = 0
     let clothesRepository: ClothesRepository
     
-    init(userId: UInt64, clothesRepository: ClothesRepository = ClothesRepository()) {
+    init(userId: UInt64, clothesRepository: ClothesRepository = ClothesRepository.shared) {
         self.userId = userId
         self.clothesRepository = clothesRepository
         fetchClothes()
