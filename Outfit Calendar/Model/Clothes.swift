@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Clothes: Decodable, Identifiable {
+struct Clothes: Codable, Identifiable {
     
     let id = UUID()
     
@@ -19,11 +19,11 @@ struct Clothes: Decodable, Identifiable {
     var color: String = ""
     var usages: String = ""
     var image: String = ""
-    var temperatureLevel: Int8 = 0
+    var temperatureLevel: Int64 = 0
     var imageContent: String = ""
     var temperatureMax: Int64 = 0
     var temperatureMin: Int64 = 0
-    var season: String = ""
+    var season: String = "Spring"
     
     private enum CodingKeys: String, CodingKey {
         case clothId = "ClothId"
@@ -36,9 +36,9 @@ struct Clothes: Decodable, Identifiable {
         case image = "Image"
         case temperatureLevel = "TemperatureLevel"
         case imageContent = "image_content"
-        case temperatureMax = "TemperatureMax"
-        case temperatureMin = "TemperatureMin"
-        case season = "Season"
+//        case temperatureMax = "TemperatureMax"
+//        case temperatureMin = "TemperatureMin"
+//        case season = "Season"
         
     }
 }
