@@ -44,6 +44,20 @@ enum ClothesRouter: URLRequestConvertible {
         var request = URLRequest(url: url)
         request.httpMethod = method
         
+        let encoder = JSONEncoder()
+        switch self {
+        case .createClothes(let clothes), .updateClothes(let clothes), .removeClothes(let clothes):
+            let data = try encoder.encode(clothes)
+            request.httpBody = data
+            request.setValue(
+                "application/json",
+                forHTTPHeaderField: "Content-Type"
+            )
+            print(String(decoding: data, as: UTF8.self))
+        default:
+            break
+        }
+        print("[Router]: request \(String(describing: request.allHTTPHeaderFields))")
         return request
     }
 }
