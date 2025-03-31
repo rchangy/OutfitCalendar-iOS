@@ -24,7 +24,7 @@ class DataViewModel: ObservableObject {
         Task {
             do{
                 let _clothes = try await clothesRepository.fetch(userId: userId)
-                print(_clothes)
+                print("[ContentViewModel]: clothes fetched \(_clothes)")
                 await setClothes(clothes: _clothes)
             } catch {
                 print("error: \(error)")

@@ -67,12 +67,11 @@ struct ClothesView: View {
 
 struct ClothesEditView: View {
     @Environment(\.dismiss) private var dismiss
-    var clothes: Clothes
-    @State var tmpClothes: Clothes
+    
+    @ObservedObject var clothesEditViewModel: ClothesEditViewModel
     
     init(clothes: Clothes = Clothes()){
-        self.clothes = clothes
-        tmpClothes = Clothes()
+        clothesEditViewModel = ClothesEditViewModel(userId: 0, clothes: clothes)
     }
     
     var body: some View{
@@ -82,26 +81,26 @@ struct ClothesEditView: View {
                 AsyncImage(url: nil)
                     .frame(width: 100, height: 100)
                 Spacer()
-                TextField(text: $tmpClothes.clothName, prompt: Text("Clothes Name")){
+                TextField(text: $clothesEditViewModel.clothes.clothName, prompt: Text("Clothes Name")){
                     Text("Name: ")
                 }
                 Spacer()
             }
             HStack{
                 Form {
-                    TextField(text: $tmpClothes.category, prompt: Text("Category")) {
+                    TextField(text: $clothesEditViewModel.clothes.category, prompt: Text("Category")) {
                         Text("Category")
                     }
-                    TextField(text: $tmpClothes.subcategory, prompt: Text("Subcategory")) {
+                    TextField(text: $clothesEditViewModel.clothes.subcategory, prompt: Text("Subcategory")) {
                         Text("Subcategory")
                     }
-                    TextField(text: $tmpClothes.color, prompt: Text("Color")) {
+                    TextField(text: $clothesEditViewModel.clothes.color, prompt: Text("Color")) {
                         Text("Color")
                     }
-                    TextField(text: $tmpClothes.usages, prompt: Text("Usages")) {
+                    TextField(text: $clothesEditViewModel.clothes.usages, prompt: Text("Usages")) {
                         Text("Usages")
                     }
-                    Picker("Season", selection: $tmpClothes.temperatureLevel) {
+                    Picker("Season", selection: $clothesEditViewModel.clothes.temperatureLevel) {
                         Text("Spring").tag(0 as Int64)
                         Text("Summer").tag(1 as Int64)
                         Text("Fall").tag(2 as Int64)
@@ -111,8 +110,14 @@ struct ClothesEditView: View {
             }
             Spacer()
         }
-        Button("Cancel"){
-            dismiss()
+        HStack{
+            Button("Save"){
+                clothesEditViewModel.saveClothes()
+                dismiss()
+            }
+            Button("Cancel"){
+                dismiss()
+            }
         }
     }
 }
