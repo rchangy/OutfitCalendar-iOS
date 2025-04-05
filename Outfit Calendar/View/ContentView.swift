@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     @ObservedObject var dataViewModel = DataViewModel(userId: 0)
     
     @State var addItemPresented = false
@@ -25,11 +26,15 @@ struct ContentView: View {
             }.toolbar{
                 Button("Add Item"){
                     addItemPresented.toggle()
-                }.sheet(isPresented: $addItemPresented){
+                }.sheet(isPresented: $addItemPresented, onDismiss: addItemDismiss){
                     ClothesEditView()
                 }
             }
         }
+    }
+    
+    func addItemDismiss(){
+        dataViewModel.fetchClothes()
     }
 }
 
