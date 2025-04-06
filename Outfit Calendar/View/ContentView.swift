@@ -16,9 +16,9 @@ struct ContentView: View {
     var body: some View {
         NavigationStack{
             List {
-                ForEach(dataViewModel.clothes) { clothes in
+                ForEach($dataViewModel.clothes) { $clothes in
                     NavigationLink{
-                        ClothesView(clothes: clothes)
+                        ClothesView(clothes: $clothes, editingClothes: clothes)
                     } label: {
                         ClothesListItemView(clothes: clothes)
                     }

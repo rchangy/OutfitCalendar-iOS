@@ -32,11 +32,12 @@ struct ClothesView: View {
     @ObservedObject var clothesViewModel : ClothesViewModel
     
     @State var clothesEditViewPresented = false
-    @State var clothes: Clothes
     
-    init(clothes: Clothes){
-        self.clothes = clothes
-        self.clothesViewModel = ClothesViewModel(userId: 0, clothes: clothes)
+    @Binding var clothes: Clothes
+    
+    init(clothes: Binding<Clothes>, editingClothes: Clothes){
+        self._clothes = clothes
+        self.clothesViewModel = ClothesViewModel(userId: 0, clothes: editingClothes)
     }
     
     var body: some View{
