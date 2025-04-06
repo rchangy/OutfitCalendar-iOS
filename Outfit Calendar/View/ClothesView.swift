@@ -29,9 +29,14 @@ struct ClothesListItemView: View {
 }
 
 struct ClothesView: View {
-    var clothes: Clothes
+    @ObservedObject var clothesViewModel : ClothesViewModel
+    
+    @State var clothesEditViewPresented = false
+    @State var clothes: Clothes
+    
     init(clothes: Clothes){
         self.clothes = clothes
+        self.clothesViewModel = ClothesViewModel(userId: 0, clothes: clothes)
     }
     
     var body: some View{
@@ -60,19 +65,35 @@ struct ClothesView: View {
                     Text(clothes.season)
                 }
             }
-            Spacer()
+        }
+        .toolbar {
+            Button("Edit") {
+                clothesEditViewPresented = true
+            }
+            .sheet(isPresented: $clothesEditViewPresented){
+                NavigationStack {
+                    ClothesEditView(clothes: $clothesViewModel.editingClothes)
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Cancel") {
+                                    clothesEditViewPresented = false
+                                }
+                            }
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Done") {
+                                    clothesEditViewPresented = false
+                                    clothes = clothesViewModel.editingClothes
+                                }
+                            }
+                        }
+                }
+            }
         }
     }
 }
 
 struct ClothesEditView: View {
-    @Environment(\.dismiss) private var dismiss
-    
-    @ObservedObject var clothesEditViewModel: ClothesEditViewModel
-    
-    init(clothes: Clothes = Clothes()){
-        clothesEditViewModel = ClothesEditViewModel(userId: 0, clothes: clothes)
-    }
+    @Binding var clothes: Clothes
     
     var body: some View{
         VStack{
@@ -81,26 +102,26 @@ struct ClothesEditView: View {
                 AsyncImage(url: nil)
                     .frame(width: 100, height: 100)
                 Spacer()
-                TextField(text: $clothesEditViewModel.clothes.clothName, prompt: Text("Clothes Name")){
+                TextField(text: $clothes.clothName, prompt: Text("Clothes Name")){
                     Text("Name: ")
                 }
                 Spacer()
             }
             HStack{
                 Form {
-                    TextField(text: $clothesEditViewModel.clothes.category, prompt: Text("Category")) {
+                    TextField(text: $clothes.category, prompt: Text("Category")) {
                         Text("Category")
                     }
-                    TextField(text: $clothesEditViewModel.clothes.subcategory, prompt: Text("Subcategory")) {
+                    TextField(text: $clothes.subcategory, prompt: Text("Subcategory")) {
                         Text("Subcategory")
                     }
-                    TextField(text: $clothesEditViewModel.clothes.color, prompt: Text("Color")) {
+                    TextField(text: $clothes.color, prompt: Text("Color")) {
                         Text("Color")
                     }
-                    TextField(text: $clothesEditViewModel.clothes.usages, prompt: Text("Usages")) {
+                    TextField(text: $clothes.usages, prompt: Text("Usages")) {
                         Text("Usages")
                     }
-                    Picker("Season", selection: $clothesEditViewModel.clothes.temperatureLevel) {
+                    Picker("Season", selection: $clothes.temperatureLevel) {
                         Text("Spring").tag(0 as Int64)
                         Text("Summer").tag(1 as Int64)
                         Text("Fall").tag(2 as Int64)
@@ -109,15 +130,6 @@ struct ClothesEditView: View {
                 }
             }
             Spacer()
-        }
-        HStack{
-            Button("Save"){
-                clothesEditViewModel.saveClothes()
-                dismiss()
-            }
-            Button("Cancel"){
-                dismiss()
-            }
         }
     }
 }
