@@ -17,4 +17,15 @@ class ClothesViewModel: ObservableObject {
         self.clothesRepository = clothesRepository
         self.editingClothes = clothes
     }
+    
+    func saveEditingClothes(){
+        print("[ClothesViewModel] saving editing clothes...")
+        Task {
+            do {
+                try await clothesRepository.update(data: editingClothes)
+            } catch {
+               print("[ClothesViewModel] an error occurred when saving editing clothes: \(error)")
+            }
+        }
+    }
 }

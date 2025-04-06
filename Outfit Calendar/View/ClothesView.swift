@@ -82,6 +82,7 @@ struct ClothesView: View {
                             ToolbarItem(placement: .confirmationAction) {
                                 Button("Done") {
                                     clothesEditViewPresented = false
+                                    clothesViewModel.saveEditingClothes()
                                     clothes = clothesViewModel.editingClothes
                                 }
                             }
