@@ -8,8 +8,8 @@
 import Foundation
 
 class DataViewModel: ObservableObject {
-    
     @Published var clothes: [Clothes] = []
+    @Published var newClothes = Clothes()
     
     var userId: UInt64 = 0
     let clothesRepository: ClothesRepository
@@ -39,4 +39,16 @@ class DataViewModel: ObservableObject {
         self.clothes = clothes
     }
     
+    func addClothes() {
+        print("[ContentViewModel] adding new clothes...")
+        Task {
+            do {
+                try await clothesRepository.create(data: newClothes)
+            } catch {
+                print("[ContentViewModel] an error occurred when adding new clothes: \(error)")
+            }
+        }
+        fetchClothes()
+        newClothes = Clothes()
+    }
 }

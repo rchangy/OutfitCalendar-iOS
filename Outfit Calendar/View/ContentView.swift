@@ -24,17 +24,28 @@ struct ContentView: View {
                     }
                 }
             }.toolbar{
-                Button("Add Item"){
-                    addItemPresented.toggle()
-                }.sheet(isPresented: $addItemPresented, onDismiss: addItemDismiss){
-                    ClothesEditView()
+                Button("Add"){
+                    addItemPresented = true
+                }.sheet(isPresented: $addItemPresented){
+                    NavigationStack {
+                        ClothesEditView(clothes: $dataViewModel.newClothes)
+                            .toolbar {
+                                ToolbarItem(placement: .cancellationAction) {
+                                    Button("Cancel") {
+                                        addItemPresented = false
+                                    }
+                                }
+                                ToolbarItem(placement: .confirmationAction) {
+                                    Button("Add") {
+                                        addItemPresented = false
+                                        dataViewModel.addClothes()
+                                    }
+                                }
+                            }
+                    }
                 }
             }
         }
-    }
-    
-    func addItemDismiss(){
-        dataViewModel.fetchClothes()
     }
 }
 
