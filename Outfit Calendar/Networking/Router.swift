@@ -68,6 +68,7 @@ enum WearingHistoryRouter: URLRequestConvertible {
     case updateWearingHistory(wearingHistory: WearingHistory)
     case removeWearingHistory(wearingHistory: WearingHistory)
     
+    
     var endpoint: String {
         switch self {
         case .fetchWearingHistory(let userId):
@@ -75,7 +76,7 @@ enum WearingHistoryRouter: URLRequestConvertible {
         case .createWearingHistory:
             return "/wearingHistory/"
         case .updateWearingHistory(let wearingHistory), .removeWearingHistory(let wearingHistory):
-            return "/wearingHistory/?UserId=\(wearingHistory.userId)&Date=\(wearingHistory.date)"
+            return "/wearingHistory/?UserId=\(wearingHistory.userId)&Date=\(wearingHistory.date.formatted(.iso8601.year().month().day()))"
         }
     }
     
