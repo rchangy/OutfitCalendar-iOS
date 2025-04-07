@@ -10,7 +10,16 @@ import SwiftUI
 struct ContentView: View {
     
     var body: some View {
-        ClosetView()
+        TabView {
+            ClosetView()
+                .tabItem {
+                    Text("Closet")
+                }
+            OutfitCalendarView()
+                .tabItem {
+                    Text("Calendar")
+                }
+        }
     }
 }
 
