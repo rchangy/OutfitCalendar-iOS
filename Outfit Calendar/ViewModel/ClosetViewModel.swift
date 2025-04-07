@@ -53,4 +53,23 @@ class ClosetViewModel: ObservableObject {
             }
         }
     }
+    
+    func deleteClothes(offsets: IndexSet) {
+        Task {
+            do {
+                for offset in offsets {
+                    print("[ContentViewModel] deleting clothes at \(offset)")
+                    try await clothesRepository.remove(data: clothes[offset])
+                }
+            } catch {
+                print("[ContentViewModel] an error occurred when deleting clothes: \(error)")
+            }
+            do {
+                let _clothes = try await clothesRepository.fetch(userId: userId)
+                await setClothes(clothes: _clothes)
+            } catch {
+                print("[ContentViewModel] an error occurred when refetching clothes after delete: \(error)")
+            }
+        }
+    }
 }

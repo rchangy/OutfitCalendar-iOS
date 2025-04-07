@@ -23,6 +23,7 @@ struct ClosetView: View {
                         ClothesListItemView(clothes: clothes)
                     }
                 }
+                .onDelete(perform: closetViewModel.deleteClothes)
             }.toolbar{
                 Button("Add"){
                     addItemPresented = true
