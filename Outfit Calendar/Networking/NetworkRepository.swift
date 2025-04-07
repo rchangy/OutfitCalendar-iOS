@@ -32,3 +32,29 @@ class ClothesRepository {
         try await service.remove(data: data)
     }
 }
+
+class WearingHistoryRepository {
+    static let shared = WearingHistoryRepository()
+    
+    let service: WearingHistoryNetworkService
+    
+    init(service: WearingHistoryNetworkService = WearingHistoryNetworkService()) {
+        self.service = service
+    }
+    
+    func fetch(userId: UInt64) async throws -> [WearingHistory] {
+        return try await service.fetchByUser(userId: userId)
+    }
+    
+    func create(data: WearingHistory) async throws {
+        try await service.create(data: data)
+    }
+    
+    func update(data: WearingHistory) async throws {
+        try await service.update(data: data)
+    }
+    
+    func remove(data: WearingHistory) async throws {
+        try await service.remove(data: data)
+    }
+}

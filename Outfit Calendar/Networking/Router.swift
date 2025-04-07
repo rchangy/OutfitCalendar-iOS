@@ -61,3 +61,56 @@ enum ClothesRouter: URLRequestConvertible {
         return request
     }
 }
+
+enum WearingHistoryRouter: URLRequestConvertible {
+    case fetchWearingHistory(userId: UInt64)
+    case createWearingHistory(wearingHistory: WearingHistory)
+    case updateWearingHistory(wearingHistory: WearingHistory)
+    case removeWearingHistory(wearingHistory: WearingHistory)
+    
+    var endpoint: String {
+        switch self {
+        case .fetchWearingHistory(let userId):
+            return "/wearingHistory?UserId=\(userId)"
+        case .createWearingHistory:
+            return "/wearingHistory/"
+        case .updateWearingHistory(let wearingHistory), .removeWearingHistory(let wearingHistory):
+            return "/wearingHistory/?UserId=\(wearingHistory.userId)&Date=\(wearingHistory.date)"
+        }
+    }
+    
+    var method: String {
+        switch self {
+        case .fetchWearingHistory:
+            return "GET"
+        case .createWearingHistory:
+            return "POST"
+        case .updateWearingHistory:
+            return "PUT"
+        case .removeWearingHistory:
+            return "DELETE"
+        }
+    }
+    
+    func makeURLRequest() throws -> URLRequest {
+        guard let url = URL(string: APIConfig.baseURL! + endpoint) else {
+            throw NetworkError.invalidURL
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        
+        let encoder = JSONEncoder()
+        switch self {
+        case .createWearingHistory(let wearingHistory), .updateWearingHistory(let wearingHistory), .removeWearingHistory(let wearingHistory):
+            let data = try encoder.encode(wearingHistory)
+            request.httpBody = data
+            request.setValue(
+                "application/json",
+                forHTTPHeaderField: "Content-Type"
+            )
+        default:
+            break
+        }
+        return request
+    }
+}

@@ -36,7 +36,11 @@ class BaseNetworkService<Router: URLRequestConvertible> {
         let (data, response) = try await urlSession.data(for: request)
         try handleResponse(data: data, response: response)
         
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY-MM-DD"
+        
         let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(formatter)
         do {
             
             let decodedData = try decoder.decode(returnType, from: data)
@@ -63,4 +67,23 @@ class ClothesNetworkService: BaseNetworkService<ClothesRouter>, UserDataServiceP
     func remove(data: Clothes) async throws {
         _ = try await request(Clothes.self, router: .removeClothes(clothes: data))
     }
+}
+
+class WearingHistoryNetworkService: BaseNetworkService<WearingHistoryRouter>, UserDataServiceProtocol {
+    func fetchByUser(userId: UInt64) async throws -> [WearingHistory] {
+        return try await request([WearingHistory].self, router: .fetchWearingHistory(userId: userId))
+    }
+    
+    func create(data: WearingHistory) async throws {
+        _ = try await request(WearingHistory.self, router: .createWearingHistory(wearingHistory: data))
+    }
+    
+    func update(data: WearingHistory) async throws {
+        _ = try await request(WearingHistory.self, router: .updateWearingHistory(wearingHistory: data))
+    }
+    
+    func remove(data: WearingHistory) async throws {
+        _ = try await request(WearingHistory.self, router: .removeWearingHistory(wearingHistory: data))
+    }
+    
 }
