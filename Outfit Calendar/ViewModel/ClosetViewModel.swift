@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DataViewModel: ObservableObject {
+class ClosetViewModel: ObservableObject {
     @Published var clothes: [Clothes] = []
     @Published var newClothes = Clothes()
     

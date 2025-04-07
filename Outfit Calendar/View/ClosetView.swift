@@ -9,14 +9,14 @@ import Foundation
 import SwiftUI
 
 struct ClosetView: View {
-    @ObservedObject var dataViewModel = DataViewModel(userId: 0)
+    @ObservedObject var closetViewModel = ClosetViewModel(userId: 0)
     
     @State var addItemPresented = false
     
     var body: some View {
         NavigationStack{
             List {
-                ForEach($dataViewModel.clothes) { $clothes in
+                ForEach($closetViewModel.clothes) { $clothes in
                     NavigationLink{
                         ClothesView(clothes: $clothes, editingClothes: clothes)
                     } label: {
@@ -28,7 +28,7 @@ struct ClosetView: View {
                     addItemPresented = true
                 }.sheet(isPresented: $addItemPresented){
                     NavigationStack {
-                        ClothesEditView(clothes: $dataViewModel.newClothes)
+                        ClothesEditView(clothes: $closetViewModel.newClothes)
                             .toolbar {
                                 ToolbarItem(placement: .cancellationAction) {
                                     Button("Cancel") {
@@ -38,7 +38,7 @@ struct ClosetView: View {
                                 ToolbarItem(placement: .confirmationAction) {
                                     Button("Add") {
                                         addItemPresented = false
-                                        dataViewModel.addClothes()
+                                        closetViewModel.addClothes()
                                     }
                                 }
                             }
