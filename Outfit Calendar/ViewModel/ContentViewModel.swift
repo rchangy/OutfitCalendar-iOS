@@ -41,14 +41,16 @@ class DataViewModel: ObservableObject {
     
     func addClothes() {
         print("[ContentViewModel] adding new clothes...")
+        let addClothes = newClothes
+        newClothes = Clothes()
         Task {
             do {
-                try await clothesRepository.create(data: newClothes)
+                try await clothesRepository.create(data: addClothes)
+                let _clothes = try await clothesRepository.fetch(userId: userId)
+                await setClothes(clothes: _clothes)
             } catch {
                 print("[ContentViewModel] an error occurred when adding new clothes: \(error)")
             }
         }
-        fetchClothes()
-        newClothes = Clothes()
     }
 }
