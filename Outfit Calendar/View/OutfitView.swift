@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct OutfitView: View {
+    @Binding var wearingHistory: WearingHistory
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("\(wearingHistory.cloth1 ?? 0)")
     }
-}
-
-#Preview {
-    OutfitView()
 }

@@ -19,8 +19,15 @@ struct OutfitCalendarView: View {
         NavigationStack(path: $path) {
             CalendarView(interval: DateInterval(start: .distantPast, end: .now), calendarViewModel: calendarViewModel,
                          dateSelected: $dateSelected, path: $path)
-                .navigationDestination(for: DateComponents.self) { date in
-                    Text("\(Calendar.current.date(from: date) ?? Date.now)")
+                .navigationDestination(for: DateComponents.self) { dateComponents in
+                    let idx = calendarViewModel.wearingHistory.indices
+                        .filter {
+                            calendarViewModel.wearingHistory[$0].date.startOfDay == dateComponents.date?.startOfDay
+                        }
+                    if !idx.isEmpty {
+                        OutfitView(wearingHistory: $calendarViewModel.wearingHistory[idx.first ?? 0])
+                            .navigationTitle(calendarViewModel.wearingHistory[idx.first ?? 0].date.formatted(date: .long, time: .omitted))
+                    }
                 }
         }
     }
