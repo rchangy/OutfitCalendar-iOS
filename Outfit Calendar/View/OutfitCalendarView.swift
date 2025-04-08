@@ -12,6 +12,7 @@ struct OutfitCalendarView: View {
     
     @State private var dateSelected: DateComponents?
     @State private var path = [DateComponents]()
+    @State private var addWearingHistoryPresented = false
     
     var wearingHistoryRepository = WearingHistoryRepository.shared
     
@@ -27,6 +28,28 @@ struct OutfitCalendarView: View {
                     if !idx.isEmpty {
                         OutfitView(wearingHistory: $calendarViewModel.wearingHistory[idx.first ?? 0])
                             .navigationTitle(calendarViewModel.wearingHistory[idx.first ?? 0].date.formatted(date: .long, time: .omitted))
+                    }
+                }
+                .toolbar {
+                    Button("Add") {
+                        addWearingHistoryPresented = true
+                    }.sheet(isPresented: $addWearingHistoryPresented) {
+                        NavigationStack {
+                            OutfitEditView(wearingHistory: $calendarViewModel.newWearingHistory)
+                                .toolbar {
+                                    ToolbarItem(placement: .cancellationAction) {
+                                        Button("Cancel") {
+                                            addWearingHistoryPresented = false
+                                        }
+                                    }
+                                    ToolbarItem(placement: .confirmationAction) {
+                                        Button("Add") {
+                                            addWearingHistoryPresented = false
+                                            calendarViewModel.addWearingHistory()
+                                        }
+                                    }
+                                }
+                        }
                     }
                 }
         }

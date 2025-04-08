@@ -55,6 +55,36 @@ class OutfitViewModel: ObservableObject {
         if _clothes.isEmpty { return nil }
         return _clothes.first
     }
+}
+
+class OutfitEditViewModel: ObservableObject {
     
+    @Published var allClothes = [Clothes]()
     
+    let clothesRepository: ClothesRepository
+    var userId: UInt64 = 0
+    
+    init() {
+        self.clothesRepository = ClothesRepository.shared
+        fetchClothes()
+    }
+    
+    func fetchClothes(){
+        Task {
+            do{
+                let _clothes = try await clothesRepository.fetch(userId: userId)
+                print("[ContentViewModel]: clothes fetched \(_clothes)")
+                await setClothes(clothes: _clothes)
+            } catch {
+                print("error: \(error)")
+            }
+        
+        }
+        
+    }
+    
+    @MainActor
+    func setClothes(clothes: [Clothes]){
+        self.allClothes = clothes
+    }
 }

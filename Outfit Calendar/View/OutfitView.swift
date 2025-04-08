@@ -25,3 +25,30 @@ struct OutfitView: View {
         }
     }
 }
+
+struct OutfitEditView: View {
+    @Binding var wearingHistory: WearingHistory
+    
+    @ObservedObject var outfitEditViewModel = OutfitEditViewModel()
+    
+    let dateRange: ClosedRange<Date> = {
+        let calendar = Calendar(identifier: .gregorian)
+        var minDateComponents = DateComponents()
+        minDateComponents.year = 1950
+        return calendar.date(from: minDateComponents)!...Date.now
+    }()
+    
+    var body: some View {
+        Form {
+            DatePicker("Date", selection: $wearingHistory.date, in: dateRange, displayedComponents: [.date])
+            Picker("Clothes1", selection: $wearingHistory.cloth1) {
+                Text("None").tag(nil as Int64?)
+                ForEach($outfitEditViewModel.allClothes) { $clothes in
+                    ClothesListItemView(clothes: clothes).tag(clothes.clothId)
+                }
+            }.pickerStyle(.navigationLink)
+        }
+    }
+}
+
+

@@ -9,6 +9,7 @@ import Foundation
 
 class CalendarViewModel: ObservableObject {
     @Published var wearingHistory: [WearingHistory] = []
+    @Published var newWearingHistory = WearingHistory()
     
     var userId: UInt64 = 0
     let wearingHistoryRepository: WearingHistoryRepository
@@ -35,5 +36,21 @@ class CalendarViewModel: ObservableObject {
     @MainActor
     func setWearingHistory(wearingHistory: [WearingHistory]) {
         self.wearingHistory = wearingHistory
+    }
+    
+    func addWearingHistory() {
+        print("[CalendarViewModel] adding new wearing history...")
+        let addWearingHistory = newWearingHistory
+        newWearingHistory = WearingHistory()
+        
+        Task {
+            do {
+                try await wearingHistoryRepository.create(data: addWearingHistory)
+                let _wearingHistory = try await wearingHistoryRepository.fetch(userId: userId)
+                await setWearingHistory(wearingHistory: _wearingHistory)
+            } catch {
+                print("[CalendarViewModel] an error occurred when adding new wearing history: \(error)")
+            }
+        }
     }
 }

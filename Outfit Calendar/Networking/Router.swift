@@ -100,10 +100,14 @@ enum WearingHistoryRouter: URLRequestConvertible {
         var request = URLRequest(url: url)
         request.httpMethod = method
         
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
         let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .formatted(formatter)
         switch self {
         case .createWearingHistory(let wearingHistory), .updateWearingHistory(let wearingHistory), .removeWearingHistory(let wearingHistory):
             let data = try encoder.encode(wearingHistory)
+            
             request.httpBody = data
             request.setValue(
                 "application/json",
