@@ -35,9 +35,8 @@ class BaseNetworkService<Router: URLRequestConvertible> {
         let request = try router.makeURLRequest()
         let (data, response) = try await urlSession.data(for: request)
         try handleResponse(data: data, response: response)
-        
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-DD"
+        formatter.dateFormat = "yyyy-MM-dd"
         
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(formatter)
